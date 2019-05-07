@@ -1,0 +1,100 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <script>
+
+    var player;
+    var count = 0;
+
+    // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    function hidePlayer(id) {
+        id.style.display = "none";
+    }
+
+    function addVideo(){
+        var videoStart = parseFloat(document.getElementById('start').value);
+        var videoEnd = document.getElementById('end').value;
+        var loop = document.getElementById('loop').value; // loop = 0 is infinity
+        var url = document.getElementById('url').value;
+        var idPlayer = 'player' + count;
+        var idCloser = 'close' + count;
+
+        var loopAux = loop - 1;
+
+        var element = document.createElement('div');
+        element.setAttribute('id', idPlayer);
+        element.style.position = "absolute";
+        element.style.top = Math.floor(Math.random() * 800);
+        element.style.left = Math.floor(Math.random() * 800);
+
+        var elementClose = document.createElement('div');
+        elementClose.setAttribute('id', idCloser);
+        elementClose.setAttribute("onclick", "hidePlayer(idCloser);");
+
+        console.log(idPlayer);
+
+        document.getElementById(idPlayer).appendChild(elementClose);
+
+        document.getElementById('ytplayer').appendChild(element);
+
+        player = new YT.Player(idPlayer, {
+            height: 180,
+            width: 320,
+            videoId: url,
+            playerVars: {
+                modestbranding: 0, // Hide the Youtube Logo
+                fs: 1, // Hide the full screen button
+                controls: 1, // Hide pause/play buttons in player
+                showinfo: 1, // Hide the video title
+                rel: 0, // Hide related videos
+                cc_load_policy: 0, // Hide closed captions
+                iv_load_policy: 3, // Hide the Video Annotations
+                autohide: 0, // Hide video controls when playing
+                autoplay: 1, // Auto-play the video on load
+                end: videoEnd,
+            },
+            events: {
+                onReady: function(e){
+                    e.target.playVideo();
+                    e.target.seekTo(videoStart);
+                },
+                onStateChange: function(e) {
+                    if (e.data === YT.PlayerState.ENDED && loopAux > 0) {
+                        loopAux--;
+                        e.target.playVideo();
+                        e.target.seekTo(videoStart);
+                    }else{
+                        if (e.data === YT.PlayerState.ENDED && loop == 0) {
+                            e.target.playVideo();
+                            e.target.seekTo(videoStart);
+                        }
+                    }
+                }
+            }
+
+            });
+
+        count = count + 1;
+    }
+
+    </script>
+
+</head>
+  <body>
+    Link:<input type="text" value="35w1YyiTfSg" id="url">
+    Start:<input type="text" min="0" value="0" id="start">
+    End:<input type="number" min="0" value="0" id="end">
+    Repeat:<input type="number" min="0" value="0" id="loop">
+
+    <button onclick='addVideo();'>Add me!</button>
+
+    <div id='ytplayer'></div>
+
+  </body>
+</html>
