@@ -7,6 +7,30 @@
     var player;
     var count = 0;
 
+    function carregarXML(){
+        try{
+            var text = document.getElementById("part").innerHTML;
+            // Code for IE
+            if (window.ActiveXObject) {
+                var doc = new ActiveXObject("Microsoft.XMLDOM");
+                doc.async = "false";
+                doc.loadXML(text);
+            }
+            // Code for Mozilla, Firefox, Opera, etc.
+            else {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(text,"text/xml");
+            }
+
+            // DocumentElement always represents the root node
+            var p = doc.getElementsByTagName("ytvideo");
+            escreveXML(p);
+        }catch (e){
+            document.write(e);
+            document.close();
+        }
+    }
+
     // 2. This code loads the IFrame Player API code asynchronously.
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
@@ -20,7 +44,7 @@
         var url = document.getElementById('url').value;
         var idPlayer = 'player' + count;
 
-        var loopAux = loop;
+        if (loop != 0) var loopAux = loop;
 
         var element = document.createElement('div');
         element.setAttribute('id', idPlayer);
@@ -89,8 +113,9 @@
     <div id='ytplayer'></div>
 
     <div id='xmlPart'>
-        <partitura>
-        </partitura>
+        <part>
+            <ytvideo url="35w1YyiTfSg" startTime="20" endTime="21" repeat="0"/>
+        </part>
     </div>
 
   </body>
