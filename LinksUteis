@@ -1,12 +1,17 @@
 Links Úteis
 
+API:
 https://developers.google.com/youtube/iframe_api_reference?hl=pt-br
-
 https://developers.google.com/youtube/player_parameters?playerVersion=HTML5&hl=pt-br
 
+EXEMPLOS:
+https://alice.dcomp.ufsj.edu.br/webart/etc/teste.html
+https://alice.dcomp.ufsj.edu.br/webart/etc/teste2.html
+https://alice.dcomp.ufsj.edu.br/webart/etc/teste3.html
+https://alice.dcomp.ufsj.edu.br/webart/etc/teste4.html
+https://www.dcomp.ufsj.edu.br/~fls/ajax/aula4/exemplos/processo/build/web/index.jsp
 
+DEMAIS LINKS:
 https://stackoverflow.com/questions/4661905/how-to-customize-an-end-time-for-a-youtube-video
-
 https://codepen.io/ldperry93/pen/CkcAK
-
 https://stackoverflow.com/questions/95731/why-does-an-onclick-property-set-with-setattribute-fail-to-work-in-ie
