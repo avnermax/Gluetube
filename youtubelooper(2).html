@@ -15,99 +15,101 @@
 
     function addVideo(){
 
-        var xhttp = new XMLHttpRequest();
         var x, i, xmlDoc;
-        xhttp.open("GET", "partitura.xml", true);
-        xhttp.send();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                xmlDoc = this.responseXML;
-                x = xmlDoc.documentElement.childNodes;
-                for (i = 0; i < x.length; i++) {
-                    var node = x[i];
-                    var url = node.getElementsByTagName('url')[0].nodeValue;
-                    var videoStart = node.getElementsByTagName('startTime')[0].nodeValue;
-                    var videoEnd = node.getElementsByTagName('endTime')[0].nodeValue;
-                    var loop = node.getElementsByTagName('repeat')[0].nodeValue;
+        x = document.getElementsByTagName('ytvideo');
+        for (i = 0; i < x.length; i++) {
+            var node = x[i];
+            var url = node.getAttribute('url');
+            var videoStart = node.getAttribute('startTime');
+            var videoEnd = node.getAttribute('endTime');
+            var loop = node.getAttribute('repeat');
 
-                    console.log(videoEnd);
-                }
-            }
-        };
+            // var url = document.getElementById('url').value;
+            // var videoStart = parseFloat(document.getElementById('start').value);
+            // var videoEnd = document.getElementById('end').value;
+            // var loop = document.getElementById('loop').value; // loop = 0 is infinity
+            var idPlayer = 'player' + count;
 
-        // var url = document.getElementById('url').value;
-        // var videoStart = parseFloat(document.getElementById('start').value);
-        // var videoEnd = document.getElementById('end').value;
-        // var loop = document.getElementById('loop').value; // loop = 0 is infinity
-        var idPlayer = 'player' + count;
+            if (loop != 0) var loopAux = loop;
 
-        if (loop != 0) var loopAux = loop;
+            var element = document.createElement('div');
+            element.setAttribute('id', idPlayer);
+            element.style.position = "absolute";
+            element.style.top = Math.floor(Math.random() * 800);
+            element.style.left = Math.floor(Math.random() * 800);
 
-        var element = document.createElement('div');
-        element.setAttribute('id', idPlayer);
-        element.style.position = "absolute";
-        element.style.top = Math.floor(Math.random() * 800);
-        element.style.left = Math.floor(Math.random() * 800);
+            document.getElementById('ytplayer').appendChild(element);
 
-        document.getElementById('ytplayer').appendChild(element);
-
-        player = new YT.Player(idPlayer, {
-            height: 180,
-            width: 320,
-            videoId: url,
-            playerVars: {
-                modestbranding: 0, // Hide the Youtube Logo
-                fs: 1, // Hide the full screen button
-                controls: 0, // Hide pause/play buttons in player
-                showinfo: 1, // Hide the video title
-                rel: 0, // Hide related videos
-                cc_load_policy: 0, // Hide closed captions
-                iv_load_policy: 3, // Hide the Video Annotations
-                autohide: 0, // Hide video controls when playing
-                autoplay: 1, // Auto-play the video on load
-                end: videoEnd,
-            },
-            events: {
-                onReady: function(e){
-                    e.target.playVideo();
-                    e.target.seekTo(videoStart);
+            player = new YT.Player(idPlayer, {
+                height: 180,
+                width: 320,
+                videoId: url,
+                playerVars: {
+                    modestbranding: 0, // Hide the Youtube Logo
+                    fs: 1, // Hide the full screen button
+                    controls: 0, // Hide pause/play buttons in player
+                    showinfo: 1, // Hide the video title
+                    rel: 0, // Hide related videos
+                    cc_load_policy: 0, // Hide closed captions
+                    iv_load_policy: 3, // Hide the Video Annotations
+                    autohide: 0, // Hide video controls when playing
+                    autoplay: 1, // Auto-play the video on load
+                    end: videoEnd,
                 },
-                onStateChange: function(e) {
-                    if (e.data === YT.PlayerState.ENDED && loopAux > 0) {
-                        loopAux--;
+                events: {
+                    onReady: function(e){
                         e.target.playVideo();
                         e.target.seekTo(videoStart);
-                    }else{
-                        if (e.data === YT.PlayerState.ENDED && loop == 0) {
+                    },
+                    onStateChange: function(e) {
+                        if (e.data === YT.PlayerState.ENDED && loopAux > 0) {
+                            loopAux--;
                             e.target.playVideo();
                             e.target.seekTo(videoStart);
+                        }else{
+                            if (e.data === YT.PlayerState.ENDED && loop == 0) {
+                                e.target.playVideo();
+                                e.target.seekTo(videoStart);
+                            }
+                        }
+
+                        if (loopAux == 0) {
+                            e.target.stopVideo();
+                            document.getElementById(idPlayer).setAttribute("style", "display:none;");
                         }
                     }
-
-                    if (loopAux == 0) {
-                        e.target.stopVideo();
-                        document.getElementById(idPlayer).setAttribute("style", "display:none;");
-                    }
                 }
-            }
 
-        });
+            });
 
-        count = count + 1;
+            count = count + 1;
+        }
     }
 
     </script>
 
 </head>
   <body>
-    Link:<input type="text" value="35w1YyiTfSg" id="url">
+    <!-- Link:<input type="text" value="35w1YyiTfSg" id="url">
     Start:<input type="text" min="0" value="0" id="start">
     End:<input type="number" min="0" value="0" id="end">
-    Repeat:<input type="number" min="0" value="0" id="loop">
+    Repeat:<input type="number" min="0" value="0" id="loop"> -->
 
     <button onclick='addVideo();'>Add me!</button>
 
     <div id='ytplayer'></div>
+
+    <listPlay>
+    	<ytvideo url="35w1YyiTfSg" startTime="20" endTime="21" repeat="0"/>
+    	<ytvideo url="35w1YyiTfSg" startTime="40" endTime="41" repeat="5"/>
+    	<ytvideo url="35w1YyiTfSg" startTime="60" endTime="61" repeat="10"/>
+    	<ytvideo url="35w1YyiTfSg" startTime="60" endTime="62" repeat="12"/>
+    	<ytvideo url="35w1YyiTfSg" startTime="30.5" endTime="31" repeat="20"/>
+    	<ytvideo url="35w1YyiTfSg" startTime="3" endTime="5" repeat="5"/>
+    	<ytvideo url="35w1YyiTfSg" startTime="4" endTime="7" repeat="3"/>
+    	<ytvideo url="35w1YyiTfSg" startTime="1" endTime="3" repeat="0"/>
+    	<ytvideo url="35w1YyiTfSg" startTime="3.8" endTime="4" repeat="0"/>
+    </listPlay>
 
   </body>
 </html>
