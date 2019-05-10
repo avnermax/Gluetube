@@ -14,13 +14,34 @@
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
     function addVideo(){
-        var videoStart = parseFloat(document.getElementById('start').value);
-        var videoEnd = document.getElementById('end').value;
-        var loop = document.getElementById('loop').value; // loop = 0 is infinity
-        var url = document.getElementById('url').value;
+
+        var xhttp = new XMLHttpRequest();
+        var x, i, xmlDoc;
+        xhttp.open("GET", "partitura.xml", true);
+        xhttp.send();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                xmlDoc = this.responseXML;
+                x = xmlDoc.documentElement.childNodes;
+                for (i = 0; i < x.length; i++) {
+                    var node = x[i];
+                    var url = node.getElementsByTagName('url')[0].nodeValue;
+                    var videoStart = node.getElementsByTagName('startTime')[0].nodeValue;
+                    var videoEnd = node.getElementsByTagName('endTime')[0].nodeValue;
+                    var loop = node.getElementsByTagName('repeat')[0].nodeValue;
+
+                    console.log(videoEnd);
+                }
+            }
+        };
+
+        // var url = document.getElementById('url').value;
+        // var videoStart = parseFloat(document.getElementById('start').value);
+        // var videoEnd = document.getElementById('end').value;
+        // var loop = document.getElementById('loop').value; // loop = 0 is infinity
         var idPlayer = 'player' + count;
 
-        var loopAux = loop - 1;
+        if (loop != 0) var loopAux = loop;
 
         var element = document.createElement('div');
         element.setAttribute('id', idPlayer);
@@ -62,10 +83,15 @@
                             e.target.seekTo(videoStart);
                         }
                     }
+
+                    if (loopAux == 0) {
+                        e.target.stopVideo();
+                        document.getElementById(idPlayer).setAttribute("style", "display:none;");
+                    }
                 }
             }
 
-            });
+        });
 
         count = count + 1;
     }
