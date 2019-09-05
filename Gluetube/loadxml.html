@@ -8,27 +8,19 @@
 <body>
 <div id='ytplayer'></div>
 
-<div>
+<div width="100%">
   <div class="menu-1">
-    <div class="row">
-      <span>
-        <p><label for="url">URL</label><input class="basic-slide" type="text" value="" id="url" placeholder="URL" /></p>
-      </span>
-      Tempo Inicial:<input type="number" min="0" value="0" id="startTime" />
-      Tempo Final:<input type="number" min="0" value="0" id="endTime" />
-      Repete:<input type="number" min="0" value="0" id="repeat" />
-      <br />
-      Pos_X:<input type="number" min="0" value="0" id="posx" />
-      Pos_Y:<input type="number" min="0" value="0" id="posy" />
-      Largura:<input type="number" min="0" value="0" id="width" />
-      Altura:<input type="number" min="0" value="0" id="height" />
-      Agendar:<input type="number" min="0" value="0" id="schedule" />
-      <br />
-      <br />
-      <button class="btn btn-ani" onclick='addVideo();'>Adicionar</button>
-      <br />
-      <br />
-    </div>
+    URL:<input class="input_text" type="text" value="" id="url" />
+    Tempo Inicial:<input class="input_text" type="number" min="0" value="0" id="startTime" />
+    Tempo Final:<input class="input_text" type="number" min="0" value="0" id="endTime" /><br>
+    Repete:<input class="input_text" type="number" min="0" value="0" id="repeat" />
+    Pos_X:<input class="input_text" type="number" min="0" value="0" id="posx" />
+    Pos_Y:<input class="input_text" type="number" min="0" value="0" id="posy" /><br>
+    Largura:<input class="input_text" type="number" min="0" value="0" id="width" />
+    Altura:<input class="input_text" type="number" min="0" value="0" id="height" />
+    Agendar:<input class="input_text" type="number" min="0" value="0" id="schedule" />
+    <br><br>
+    <button class="btn btn-ani" onclick='addVideo();'>Adicionar</button>
   </div>
 
   <div class="menu-2">
