@@ -165,17 +165,17 @@ function playVideo(video, index){
           loopAux--;
           e.target.playVideo();
           e.target.seekTo(video.startTime);
-          }else{
-            if (e.data === YT.PlayerState.ENDED && video.repeat == 0) {
-              e.target.playVideo();
-              e.target.seekTo(video.startTime);
-            }
-          }
-          if (loopAux == 0) {
-            e.target.stopVideo();
-            document.getElementById(idPlayer).setAttribute("style", "display:none;");
+        }else{
+          if (e.data === YT.PlayerState.ENDED && video.repeat == 0) {
+            e.target.playVideo();
+            e.target.seekTo(video.startTime);
           }
         }
+        if (loopAux == 0) {
+          e.target.stopVideo();
+          document.getElementById(idPlayer).setAttribute("style", "display:none;");
+        }
+      }
     }
   });
 }
