@@ -26,8 +26,8 @@ function addVideo(e) {
     video.endTime = parseFloat(document.getElementById('endTime').value);
     video.repeat = parseFloat(document.getElementById('repeat').value);
     video.volume = parseFloat(document.getElementById('volume').value);
-    video.posx = parseFloat(document.getElementById('posx').value + 560);
-    video.posy = parseFloat(document.getElementById('posy').value + 25);
+    video.posx = parseFloat(document.getElementById('posx').value + 1113);
+    video.posy = parseFloat(document.getElementById('posy').value + 18);
     video.width = parseFloat(document.getElementById('width').value + 600);
     video.height = parseFloat(document.getElementById('height').value + 450);
     video.schedule = parseFloat(document.getElementById('schedule').value * 1000);

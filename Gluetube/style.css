@@ -18,15 +18,21 @@ table {
 /* MENUS */
 .container {
     width: 100%;
-    position: fixed;
+    position: static;
     padding: 10px;
 }
 
 .menu-1 {
     width: 365px;
     border: 1px solid white;
-    position: static;
+    position: relative;
+	float: left;
     padding: 10px;
+}
+.menu-2 {
+    position: relative;
+	float: left;
+    padding-left: 15px;
 }
 
 /* BUTTON */
@@ -73,7 +79,7 @@ table {
 /* TEXT AREA */
 .input_text {
     padding: 5px;
-    font-size: 1.0em;
+    font-size: 0.9em;
     width: 200px;
-    height: 30px;
+    height: 32px;
 }
