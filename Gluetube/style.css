@@ -4,27 +4,28 @@ html, body {
 	font-family: sans-serif;
 }
 table, th, td {
-  border: 1px solid black;
+  border: 1px solid white;
 }
 table {
   border-collapse: collapse;
 }
 
 /* MENUS */
-.menu-1 {
-	width: 900px;
-  border: 1px solid white;
-	position:relative;
+.container {
+	width: 100%;
+	position: fixed;
 	padding: 10px;
 }
-.menu-2 {
-	position: relative;
-  padding: 10px;
+.menu-1 {
+	width: 365px;
+	border: 1px solid white;
+	position: static;
+	padding: 10px;
 }
 
 /* BUTTON */
 .btn {
-  color: #fff;
+  color: #778899;
   cursor: pointer;
   font-size:16px;
   font-weight: 400;
@@ -60,9 +61,7 @@ text-shadow: 1px 1px 2px #427388;
 /* TEXT AREA */
 .input_text {
 	padding: 5px;
-  font-size: 0.9em;
+  font-size: 1.0em;
   width: 200px;
 	height: 30px;
-  border-radius: 5px;
-  /* border: 3px solid #BABABA; */
 }

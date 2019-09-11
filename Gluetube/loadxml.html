@@ -6,32 +6,32 @@
 </head>
 
 <body>
-<div id='ytplayer'></div>
 
-<div width="100%">
+<div class="container">
   <div class="menu-1">
-    URL:<input class="input_text" type="text" value="" id="url" />
-    Tempo Inicial:<input class="input_text" type="number" min="0" value="0" id="startTime" />
-    Tempo Final:<input class="input_text" type="number" min="0" value="0" id="endTime" /><br>
-    Repete:<input class="input_text" type="number" min="0" value="0" id="repeat" />
-    Pos_X:<input class="input_text" type="number" min="0" value="0" id="posx" />
-    Pos_Y:<input class="input_text" type="number" min="0" value="0" id="posy" /><br>
-    Largura:<input class="input_text" type="number" min="0" value="0" id="width" />
-    Altura:<input class="input_text" type="number" min="0" value="0" id="height" />
-    Agendar:<input class="input_text" type="number" min="0" value="0" id="schedule" />
-    <br><br>
+    <input class="input_text" type="text" value="" id="url"/> URL<br>
+    <input class="input_text" type="number" min="0" value="0" id="startTime"/> Tempo Inicial<br>
+    <input class="input_text" type="number" min="0" value="0" id="endTime"/> Tempo Final<br>
+    <input class="input_text" type="number" min="0" value="1" id="repeat"/> Repete<br>
+    <input class="input_text" type="number" min="0" value="0" id="posx" /> Pos_X<br>
+    <input class="input_text" type="number" min="0" value="0" id="posy" /> Pos_Y<br>
+    <input class="input_text" type="number" min="0" value="50" id="volume" /> Volume<br>
+    <input class="input_text" type="number" min="0" value="0" id="width" /> Largura<br>
+    <input class="input_text" type="number" min="0" value="0" id="height" /> Altura<br>
+    <input class="input_text" type="number" min="0" value="0" id="schedule" /> Agendar<br>
+    <br>
     <button class="btn btn-ani" onclick='addVideo();'>Adicionar</button>
-  </div>
-
-  <div class="menu-2">
     <button class="btn btn-ani" onclick='playScore();'>Play Score</button>
     <button class="btn btn-ani" onclick='stopScore();'>Stop Score</button>
     <input class="btn btn-ani" type='button' onclick='saveScore();' value='Save'/>
     <input class="btn btn-ani" type="file" id="file-input" onchange="loadScore();" value="Load"/>
   </div>
+
+  <table id=score></table>
 </div>
 
-<table id=score></table>
+<div id='ytplayer'></div>
+
 </body>
 
 </html>
