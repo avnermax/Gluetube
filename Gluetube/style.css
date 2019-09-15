@@ -18,6 +18,9 @@ table {
 /* DRAGGABLE DIV */
 .dragDiv {
     position: absolute;
+    border: 1px solid #d3d3d3;
+    resize: both;
+    overflow: auto;
 }
 
 .titleDiv {

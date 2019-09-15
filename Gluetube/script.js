@@ -26,10 +26,10 @@ function addVideo(e) {
     video.endTime = parseFloat(document.getElementById('endTime').value);
     video.repeat = parseFloat(document.getElementById('repeat').value);
     video.volume = parseFloat(document.getElementById('volume').value);
-    video.posx = parseFloat(document.getElementById('posx').value + 1115);
-    video.posy = parseFloat(document.getElementById('posy').value + 18);
-    video.width = parseFloat(document.getElementById('width').value + 600);
-    video.height = parseFloat(document.getElementById('height').value + 450);
+    video.posx = parseFloat(document.getElementById('posx').value);
+    video.posy = parseFloat(document.getElementById('posy').value);
+    video.width = parseFloat(document.getElementById('width').value);
+    video.height = parseFloat(document.getElementById('height').value);
     video.schedule = parseFloat(document.getElementById('schedule').value * 1000);
     score.push(video);
     showScore();
@@ -129,7 +129,6 @@ function stopScore() {
 }
 
 function playVideo(video, index) {
-    // console.log(video, index);
     var idPlayer = 'player' + index;
     var idContainer = 'container_video' + index;
     var title_idContainer = idContainer + '_title';
@@ -139,8 +138,8 @@ function playVideo(video, index) {
     var element = document.createElement('div');
     element.setAttribute('id', idContainer);
     element.setAttribute('class', 'dragDiv');
-    // element.style.width = video.width;
-    // element.style.height = video.height;
+    element.style.left = video.posx;
+    element.style.top = video.posy;
     document.getElementById('ytplayer').appendChild(element);
 
     // DIV titulo.
@@ -148,19 +147,15 @@ function playVideo(video, index) {
     element_title.setAttribute('id', title_idContainer);
     element_title.setAttribute('class', 'titleDiv');
     document.getElementById(idContainer).appendChild(element_title);
-
     // var textnode = document.createTextNode('MOVE');
     // document.getElementById(title_idContainer).appendChild(textnode);
 
     // DIV video.
     var element_video = document.createElement('div');
     element_video.setAttribute('id', idPlayer);
-    // element_video.style.position = absolute;
-    // element_video.style.left = video.posx;
-    // element_video.style.top = video.posy;
     document.getElementById(idContainer).appendChild(element_video);
 
-    // Movimento do DIV.
+    // Movimenta o DIV passado por parâmetro.
     dragElement(document.getElementById(idContainer));
 
     player = new YT.Player(idPlayer, {
@@ -171,7 +166,7 @@ function playVideo(video, index) {
         playerVars: {
             modestbranding: 0, // Hide the Youtube Logo
             fs: 1, // Hide the full screen button
-            controls: 1, // Hide pause/play buttons in player
+            controls: 1, // Show pause/play buttons in player
             showinfo: 1, // Hide the video title
             rel: 0, // Hide related videos
             cc_load_policy: 0, // Hide closed captions
@@ -206,7 +201,7 @@ function playVideo(video, index) {
     });
 }
 
-// Cria DIV arrastável.
+// Faz o movimento do DIV.
 function dragElement(element) {
     var pos1 = 0,
         pos2 = 0,
