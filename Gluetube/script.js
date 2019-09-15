@@ -1,4 +1,4 @@
-// 2. This code loads the IFrame Player API code asynchronously.
+// Construção da tabela e execução do vídeo
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -129,16 +129,39 @@ function stopScore() {
 }
 
 function playVideo(video, index) {
-    console.log(video, index);
+    // console.log(video, index);
     var idPlayer = 'player' + index;
+    var idContainer = 'container_video' + index;
+    var title_idContainer = idContainer + '_title';
     if (video.repeat != 0) var loopAux = video.repeat;
 
+    // DIV Container do video e titulo.
     var element = document.createElement('div');
-    element.setAttribute('id', idPlayer);
-    element.style.position = "absolute";
-    element.style.left = video.posx;
-    element.style.top = video.posy;
+    element.setAttribute('id', idContainer);
+    element.setAttribute('class', 'dragDiv');
+    // element.style.width = video.width;
+    // element.style.height = video.height;
     document.getElementById('ytplayer').appendChild(element);
+
+    // DIV titulo.
+    var element_title = document.createElement('div');
+    element_title.setAttribute('id', title_idContainer);
+    element_title.setAttribute('class', 'titleDiv');
+    document.getElementById(idContainer).appendChild(element_title);
+
+    // var textnode = document.createTextNode('MOVE');
+    // document.getElementById(title_idContainer).appendChild(textnode);
+
+    // DIV video.
+    var element_video = document.createElement('div');
+    element_video.setAttribute('id', idPlayer);
+    // element_video.style.position = absolute;
+    // element_video.style.left = video.posx;
+    // element_video.style.top = video.posy;
+    document.getElementById(idContainer).appendChild(element_video);
+
+    // Movimento do DIV.
+    dragElement(document.getElementById(idContainer));
 
     player = new YT.Player(idPlayer, {
         host: 'http://www.youtube.com',
@@ -181,4 +204,49 @@ function playVideo(video, index) {
             }
         }
     });
+}
+
+// Cria DIV arrastável.
+function dragElement(element) {
+    var pos1 = 0,
+        pos2 = 0,
+        pos3 = 0,
+        pos4 = 0;
+    if (document.getElementById(element.id + '_title')) {
+        // if present, the header is where you move the DIV from:
+        document.getElementById(element.id + '_title').onmousedown = dragMouseDown;
+    } else {
+        // otherwise, move the DIV from anywhere inside the DIV:
+        element.onmousedown = dragMouseDown;
+    }
+
+    function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        element.style.top = (element.offsetTop - pos2) + "px";
+        element.style.left = (element.offsetLeft - pos1) + "px";
+    }
+
+    function closeDragElement() {
+        // stop moving when mouse button is released:
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
 }

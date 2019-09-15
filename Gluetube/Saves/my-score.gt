@@ -5,7 +5,7 @@
 {"url":"rrdNMU2rmTw","startTime":5,"endTime":40,"repeat":3,"volume":55,"posx":560,"posy":25,"width":600,"height":450,"schedule":28000},
 {"url":"yWtw2-rQHSo","startTime":0,"endTime":35,"repeat":3,"volume":55,"posx":560,"posy":25,"width":600,"height":450,"schedule":36000},
 {"url":"G_nNB0I7Rog","startTime":0,"endTime":35,"repeat":2,"volume":45,"posx":560,"posy":25,"width":600,"height":450,"schedule":42000},
-{"url":"a_E7jX3VIJo","startTime":0,"endTime":35,"repeat":2,"volume":55,"posx":560,"posy":25,"width":600,"height":450,"schedule":50000},
+{"url":"a_E7jX3VIJo","startTime":0,"endTime":35,"repeat":1,"volume":55,"posx":560,"posy":25,"width":600,"height":450,"schedule":50000},
 {"url":"bpwMLlSSdPI","startTime":0,"endTime":15,"repeat":1,"volume":80,"posx":560,"posy":25,"width":600,"height":450,"schedule":100000},
 {"url":"bpwMLlSSdPI","startTime":0,"endTime":15,"repeat":1,"volume":50,"posx":560,"posy":25,"width":600,"height":450,"schedule":115000},
 {"url":"bpwMLlSSdPI","startTime":0,"endTime":15,"repeat":1,"volume":30,"posx":560,"posy":25,"width":600,"height":450,"schedule":130000},
