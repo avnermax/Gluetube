@@ -182,7 +182,7 @@ function showScore() {
 }
 
 function removeVideo(event) {
-    score.splice(event.target.idContainer, 1);
+    score.splice(event.target.idContainer, 1); // Erro - Está removendo sempre o primeiro item.
     showScore();
     initTable();
 }
