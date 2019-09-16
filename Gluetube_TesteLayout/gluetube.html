@@ -5,15 +5,19 @@
         <link rel="stylesheet" type="text/css" href="table.css">
         <script src="script.js"></script>
     </head>
-    <body>
+    <body onload="initTable();">
 
         <button class="btn btn-ani" onclick='playScore();'>Play Score</button>
         <button class="btn btn-ani" onclick='stopScore();'>Stop Score</button>
         <input class="btn btn-ani" type='button' onclick='saveScore();' value='Save'/>
         <input class="btn btn-ani" type="file" id="file-input" onchange="loadScore();" value="Load"/>
 
+        <table id="score">
+            <!--  -->
+        </table>
+
         <table>
-            <thead>
+            <!-- <thead>
                 <tr>
                     <th>URL</th>
                     <th>Start Time</th>
@@ -27,9 +31,9 @@
                     <th>Schedule</th>
                     <th>Remove</th>
                 </tr>
-            </thead>
-            <tbody>
-                <tr>
+            </thead> -->
+            <!-- <tbody> -->
+                <!-- <tr>
                     <td><input class="input_text" type="text" value="" id="url"/></td>
                     <td><input class="input_number" type="number" min="0" value="0" id="startTime"/></td>
                     <td><input class="input_number" type="number" min="0" value="0" id="endTime"/></td>
@@ -41,11 +45,11 @@
                     <td><input class="input_number" type="number" min="0" value="300" id="height" /></td>
                     <td><input class="input_number" type="number" min="0" value="0" id="schedule" /></td>
                     <td><button onclick=''>X</button></td>
-                </tr>
-                <tr>
-                    <td colspan="11" align="center"><button class="btn btn-ani" onclick='addVideo();'>Adicionar</button></td>
-                </tr>
-            </tbody>
+                </tr> -->
+                <!-- <tr>
+                    <td colspan="11" align="center"><button class="btn btn-ani" onclick='addRow();'>Adicionar</button></td>
+                </tr> -->
+            <!-- </tbody> -->
         </table>
 
         <div id='ytplayer'></div>

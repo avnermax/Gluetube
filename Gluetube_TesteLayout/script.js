@@ -4,7 +4,7 @@ tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-var score = [];
+var score = [{"url":"","startTime":0,"endTime":0,"repeat":1,"volume":50,"posx":10,"posy":10,"width":400,"height":300,"schedule":0}];
 
 var Video = {
     url: "",
@@ -19,7 +19,7 @@ var Video = {
     schedule: 0
 };
 
-function addVideo(e) {
+function addVideo() {
     var video = Object.create(Video);
     video.url = document.getElementById('url').value;
     video.startTime = parseFloat(document.getElementById('startTime').value);
@@ -45,6 +45,7 @@ function loadScore() {
     reader.onload = function(e) {
         var contents = e.target.result;
         score = JSON.parse(contents);
+        initTable();
         showScore();
     };
     reader.readAsText(file);
@@ -66,6 +67,86 @@ function saveScore() {
     document.body.removeChild(anchor);
 }
 
+function initTable() {
+    var table = document.getElementById("score");
+
+    // Add labels in the table
+    const keys = Object.keys(Video);
+    var header = table.createTHead();
+    var newRow = header.insertRow(-1);
+    for (const key of keys) {
+        let newCell = document.createElement("th");
+        if(key == "url") newCell.innerHTML = "URL";
+        if(key == "startTime") newCell.innerHTML = "Start Time";
+        if(key == "endTime") newCell.innerHTML = "End Time";
+        if(key == "repeat") newCell.innerHTML = "Repeat";
+        if(key == "volume") newCell.innerHTML = "Volume";
+        if(key == "posx") newCell.innerHTML = "PosX";
+        if(key == "posy") newCell.innerHTML = "PosY";
+        if(key == "width") newCell.innerHTML = "Width";
+        if(key == "height") newCell.innerHTML = "Height";
+        if(key == "schedule") newCell.innerHTML = "Schedule";
+        newRow.appendChild(newCell);
+    }
+    let newCellTH = document.createElement("th");
+    newCell.innerHTML = "Remove";
+    newRow.appendChild(newCellTH);
+
+    var newRow = header.insertRow(-1);
+    let newCell = newRow.insertCell(-1);
+    newCell.colspan = "11";
+    newCell.align = "center";
+
+    var button = document.createElement("button");
+    button.className = "btn btn-ani";
+    button.onclick = "addRow";
+    button.innerHTML = "Adicionar";
+
+    newCell.appendChild(button);
+    newRow.appendChild(newCell);
+}
+
+function addRow() {
+    var table = document.getElementById("score");
+
+    // Add values in the table
+    let video = score[score.length - 1];
+    let values = Object.values(video);
+    var c = 0;
+    var newRow = table.insertRow(-1);
+    console.log(values);
+    for (const value of values) {
+        c = c + 1;
+        let newCell = newRow.insertCell(-1);
+        var input = document.createElement("input");
+        if (c == 1) {
+            input.id = "url";
+            input.type = "text";
+            input.className = "input_text";
+        }else{
+            if (c == 2) input.id = "startTime";
+            if (c == 3) input.id = "endTime";
+            if (c == 4) input.id = "repeat";
+            if (c == 5) input.id = "volume";
+            if (c == 6) input.id = "posx";
+            if (c == 7) input.id = "posy";
+            if (c == 8) input.id = "width";
+            if (c == 9) input.id = "height";
+            if (c == 10) input.id = "schedule";
+            input.value = value;
+            input.type = "number";
+            input.className = "input_number";
+        }
+        newCell.appendChild(input);
+    }
+    let newCell = newRow.insertCell(-1);
+    let button_remove = document.createElement("button");
+    button_remove.innerHTML = "X";
+    button_remove.onclick = removeVideo;
+    newCell.appendChild(button_remove);
+
+}
+
 function showScore() {
     var table = document.getElementById("score");
 
@@ -73,31 +154,37 @@ function showScore() {
         table.deleteRow(0);
     }
 
-    // Add labels
-    const keys = Object.keys(Video);
-    var header = table.createTHead();
-    var newRow = header.insertRow(-1);
-    for (const key of keys) {
-        let newCell = newRow.insertCell(-1);
-        let newText = document.createTextNode(key);
-        newCell.appendChild(newText);
-    }
-
-    // Add values
+    // Add values in the table
     for (var i = 0; i < score.length; i++) {
         let video = score[i];
         let values = Object.values(video);
+        var c = 0;
         var newRow = table.insertRow(-1);
         for (const value of values) {
+            c = c + 1;
             let newCell = newRow.insertCell(-1);
-            let newText = document.createTextNode(value);
-            newCell.appendChild(newText);
+            var input = document.createElement("input");
+            if (c == 1) {
+                input.id = "url";
+                input.type = "text";
+                input.className = "input_text";
+            }else{
+                if (c == 2) input.id = "startTime";
+                if (c == 3) input.id = "endTime";
+                if (c == 4) input.id = "repeat";
+                if (c == 5) input.id = "volume";
+                if (c == 6) input.id = "posx";
+                if (c == 7) input.id = "posy";
+                if (c == 8) input.id = "width";
+                if (c == 9) input.id = "height";
+                if (c == 10) input.id = "schedule";
+                input.value = value;
+                input.type = "number";
+                input.className = "input_number";
+            }
+            newCell.appendChild(input);
         }
         let newCell = newRow.insertCell(-1);
-        let button_edit = document.createElement("button");
-        button_edit.innerHTML = "E";
-        button_edit.onclick = editVideo;
-        newCell.appendChild(button_edit);
         let button_remove = document.createElement("button");
         button_remove.innerHTML = "X";
         button_remove.onclick = removeVideo;
@@ -107,6 +194,7 @@ function showScore() {
 
 function removeVideo(event) {
     score.splice(event.target.innerHTML, 1);
+    initTable();
     showScore();
 }
 
