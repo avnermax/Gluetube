@@ -4,7 +4,7 @@ tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-var score = [{"url":"","startTime":0,"endTime":0,"repeat":1,"volume":50,"posx":10,"posy":10,"width":400,"height":300,"schedule":0}];
+var score = [];
 
 var Video = {
     url: "",
@@ -19,22 +19,6 @@ var Video = {
     schedule: 0
 };
 
-function addVideo() {
-    var video = Object.create(Video);
-    video.url = document.getElementById('url').value;
-    video.startTime = parseFloat(document.getElementById('startTime').value);
-    video.endTime = parseFloat(document.getElementById('endTime').value);
-    video.repeat = parseFloat(document.getElementById('repeat').value);
-    video.volume = parseFloat(document.getElementById('volume').value);
-    video.posx = parseFloat(document.getElementById('posx').value);
-    video.posy = parseFloat(document.getElementById('posy').value);
-    video.width = parseFloat(document.getElementById('width').value);
-    video.height = parseFloat(document.getElementById('height').value);
-    video.schedule = parseFloat(document.getElementById('schedule').value * 1000);
-    score.push(video);
-    showScore();
-}
-
 function loadScore() {
     var e = document.getElementById("file-input");
     var file = e.files[0];
@@ -45,7 +29,6 @@ function loadScore() {
     reader.onload = function(e) {
         var contents = e.target.result;
         score = JSON.parse(contents);
-        initTable();
         showScore();
     };
     reader.readAsText(file);
@@ -88,25 +71,29 @@ function initTable() {
         if(key == "schedule") newCell.innerHTML = "Schedule";
         newRow.appendChild(newCell);
     }
-    let newCellTH = document.createElement("th");
-    newCell.innerHTML = "Remove";
-    newRow.appendChild(newCellTH);
-
-    var newRow = header.insertRow(-1);
-    let newCell = newRow.insertCell(-1);
-    newCell.colspan = "11";
-    newCell.align = "center";
-
-    var button = document.createElement("button");
-    button.className = "btn btn-ani";
-    button.onclick = "addRow";
-    button.innerHTML = "Adicionar";
-
-    newCell.appendChild(button);
-    newRow.appendChild(newCell);
+    let newCellEdit = document.createElement("th");
+    newCellEdit.innerHTML = "Editar";
+    newRow.appendChild(newCellEdit);
+    let newCellRemove = document.createElement("th");
+    newCellRemove.innerHTML = "Remove";
+    newRow.appendChild(newCellRemove);
 }
 
 function addRow() {
+    var v = Object.create(Video);
+    console.log(v.url);
+    v.url = "";
+    v.startTime = 0;
+    v.endTime = 0;
+    v.repeat = 1;
+    v.volume = 50;
+    v.posx = 10;
+    v.posy = 10;
+    v.width = 400;
+    v.height = 300;
+    v.schedule = 0 * 1000;
+    score.push(v);
+
     var table = document.getElementById("score");
 
     // Add values in the table
@@ -124,27 +111,23 @@ function addRow() {
             input.type = "text";
             input.className = "input_text";
         }else{
-            if (c == 2) input.id = "startTime";
-            if (c == 3) input.id = "endTime";
-            if (c == 4) input.id = "repeat";
-            if (c == 5) input.id = "volume";
-            if (c == 6) input.id = "posx";
-            if (c == 7) input.id = "posy";
-            if (c == 8) input.id = "width";
-            if (c == 9) input.id = "height";
-            if (c == 10) input.id = "schedule";
-            input.value = value;
             input.type = "number";
             input.className = "input_number";
         }
+        input.value = value;
         newCell.appendChild(input);
     }
-    let newCell = newRow.insertCell(-1);
+    let newCellEdit = newRow.insertCell(-1);
+    let button_edit = document.createElement("button");
+    button_edit.innerHTML = "E";
+    button_edit.onclick = editVideo;
+    newCellEdit.appendChild(button_edit);
+
+    let newCellRemove = newRow.insertCell(-1);
     let button_remove = document.createElement("button");
     button_remove.innerHTML = "X";
     button_remove.onclick = removeVideo;
-    newCell.appendChild(button_remove);
-
+    newCellRemove.appendChild(button_remove);
 }
 
 function showScore() {
@@ -184,18 +167,24 @@ function showScore() {
             }
             newCell.appendChild(input);
         }
-        let newCell = newRow.insertCell(-1);
+        let newCellEdit = newRow.insertCell(-1);
+        let button_edit = document.createElement("button");
+        button_edit.innerHTML = "E";
+        button_edit.onclick = editVideo;
+        newCellEdit.appendChild(button_edit);
+
+        let newCellRemove = newRow.insertCell(-1);
         let button_remove = document.createElement("button");
         button_remove.innerHTML = "X";
         button_remove.onclick = removeVideo;
-        newCell.appendChild(button_remove);
+        newCellRemove.appendChild(button_remove);
     }
 }
 
 function removeVideo(event) {
-    score.splice(event.target.innerHTML, 1);
-    initTable();
+    score.splice(event.target.idContainer, 1);
     showScore();
+    initTable();
 }
 
 function editVideo(event) {
@@ -265,7 +254,7 @@ function playVideo(video, index) {
             showinfo: 1, // Hide the video title
             rel: 0, // Hide related videos
             cc_load_policy: 0, // Hide closed captions
-            iv_load_policy: 3, // Hide the Video Annotations
+            iv_load_policy: 3, // Hide the video annotations
             autohide: 0, // Hide video controls when playing
             autoplay: 1, // Auto-play the video on load
             end: video.endTime,
