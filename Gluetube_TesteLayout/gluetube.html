@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="table.css">
+        <script src="script.js"></script>
+    </head>
+    <body>
+
+        <button class="btn btn-ani" onclick='playScore();'>Play Score</button>
+        <button class="btn btn-ani" onclick='stopScore();'>Stop Score</button>
+        <input class="btn btn-ani" type='button' onclick='saveScore();' value='Save'/>
+        <input class="btn btn-ani" type="file" id="file-input" onchange="loadScore();" value="Load"/>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>URL</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Looping</th>
+                    <th>PosX</th>
+                    <th>PosY</th>
+                    <th>Volume</th>
+                    <th>Largura</th>
+                    <th>Altura</th>
+                    <th>Schedule</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input class="input_text" type="text" value="" id="url"/></td>
+                    <td><input class="input_number" type="number" min="0" value="0" id="startTime"/></td>
+                    <td><input class="input_number" type="number" min="0" value="0" id="endTime"/></td>
+                    <td><input class="input_number" type="number" min="0" value="1" id="repeat"/></td>
+                    <td><input class="input_number" type="number" min="0" value="10" id="posx" /></td>
+                    <td><input class="input_number" type="number" min="0" value="10" id="posy" /></td>
+                    <td><input class="input_number" type="number" min="0" value="50" id="volume" /></td>
+                    <td><input class="input_number" type="number" min="0" value="400" id="width" /></td>
+                    <td><input class="input_number" type="number" min="0" value="300" id="height" /></td>
+                    <td><input class="input_number" type="number" min="0" value="0" id="schedule" /></td>
+                    <td><button onclick=''>X</button></td>
+                </tr>
+                <tr>
+                    <td colspan="11" align="center"><button class="btn btn-ani" onclick='addVideo();'>Adicionar</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div id='ytplayer'></div>
+
+    </body>
+</html>

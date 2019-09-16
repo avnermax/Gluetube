@@ -86,9 +86,16 @@ body {
 }
 
 /* TEXT AREA */
+.input_number {
+    padding: 5px;
+    font-size: 0.9em;
+    width: 40px;
+    height: 32px;
+}
+
 .input_text {
     padding: 5px;
     font-size: 0.9em;
-    width: 90px;
+    width: 100px;
     height: 32px;
 }
