@@ -149,17 +149,17 @@ function playVideo(video, index) {
     element.style.top = video.posy;
     document.getElementById('ytplayer').appendChild(element);
 
-    // DIV titulo.
-    var element_title = document.createElement('div');
-    element_title.setAttribute('id', title_idContainer);
-    element_title.setAttribute('class', 'titleDiv');
-    document.getElementById(idContainer).appendChild(element_title);
-    // var textnode = document.createTextNode('MOVE');
-    // document.getElementById(title_idContainer).appendChild(textnode);
+    // DIV barra de move up.
+    var element_barUp = document.createElement('div');
+    element_barUp.setAttribute('id', title_idContainer);
+    element_barUp.setAttribute('class', 'barDiv');
+    document.getElementById(idContainer).appendChild(element_barUp);
 
     // DIV video.
     var element_video = document.createElement('div');
     element_video.setAttribute('id', idPlayer);
+    // element_video.style.height = "100%" + 20;
+    // element_video.style.width = "100%";
     document.getElementById(idContainer).appendChild(element_video);
 
     // Movimenta o DIV passado por parâmetro.
@@ -167,8 +167,8 @@ function playVideo(video, index) {
 
     player = new YT.Player(idPlayer, {
         host: 'http://www.youtube.com',
-        height: video.height,
-        width: video.width,
+        height: "100%",
+        width: "100%",
         videoId: video.url,
         playerVars: {
             modestbranding: 0, // Hide the Youtube Logo
@@ -201,7 +201,7 @@ function playVideo(video, index) {
                 }
                 if (loopAux == 0) {
                     e.target.stopVideo();
-                    document.getElementById(idPlayer).setAttribute("style", "display:none;");
+                    document.getElementById(idContainer).setAttribute("style", "display:none;");
                 }
             }
         }

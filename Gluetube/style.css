@@ -20,15 +20,14 @@ body {
     position: absolute;
     border: 1px solid #d3d3d3;
     resize: both;
-    overflow: auto;
+    overflow: hidden;
 }
 
-.titleDiv {
-    height: 20px;
+.barDiv {
+    height: 7px;
     cursor: move;
     background-color: #2196F3;
     color: #fff;
-    text-align: center;
 }
 
 /* MENUS */
