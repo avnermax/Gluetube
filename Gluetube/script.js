@@ -122,7 +122,7 @@ function playScore() {
         const video = score[i];
         const count = i;
         var time = setTimeout(function() {
-            playVideo(video, count);
+            play(video, count);
         }, video.schedule);
         times.push(time);
     }
@@ -135,7 +135,7 @@ function stopScore() {
     times = [];
 }
 
-function playVideo(video, index) {
+function play(video, index) {
     var idPlayer = 'player' + index;
     var idContainer = 'container_video' + index;
     var title_idContainer = idContainer + '_title';
@@ -184,24 +184,27 @@ function playVideo(video, index) {
         },
         events: {
             onReady: function(e) {
-                e.target.setVolume(video.volume); // 0 ~ 100
-                e.target.playVideo();
+                e.target.setVolume(video.volume);
                 e.target.seekTo(video.startTime);
+                e.target.playVideo();
             },
             onStateChange: function(e) {
                 if (e.data === YT.PlayerState.ENDED && loopAux > 0) {
                     loopAux--;
-                    e.target.playVideo();
                     e.target.seekTo(video.startTime);
+                    e.target.playVideo();
                 } else {
                     if (e.data === YT.PlayerState.ENDED && video.repeat == 0) {
-                        e.target.playVideo();
                         e.target.seekTo(video.startTime);
+                        e.target.playVideo();
                     }
                 }
                 if (loopAux == 0) {
                     e.target.stopVideo();
-                    document.getElementById(idContainer).setAttribute("style", "display:none;");
+                    var node = document.getElementById(idContainer);
+                    if (node.parentNode) {
+                      node.parentNode.removeChild(node);
+                    }
                 }
             }
         }
