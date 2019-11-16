@@ -137,6 +137,7 @@ function stopScore() {
 
 function play(video, index) {
     var idPlayer = 'player' + index;
+    var idObject = 'frame' + index;
     var idContainer = 'container_video' + index;
     var title_idContainer = idContainer + '_title';
     if (video.repeat != 0) var loopAux = video.repeat;
@@ -155,60 +156,77 @@ function play(video, index) {
     element_barUp.setAttribute('class', 'barDiv');
     document.getElementById(idContainer).appendChild(element_barUp);
 
-    // DIV video.
-    var element_video = document.createElement('div');
-    element_video.setAttribute('id', idPlayer);
-    // element_video.style.height = "100%" + 20;
-    // element_video.style.width = "100%";
-    document.getElementById(idContainer).appendChild(element_video);
-
     // Movimenta o DIV passado por parâmetro.
     dragElement(document.getElementById(idContainer));
 
-    player = new YT.Player(idPlayer, {
-        host: 'http://www.youtube.com',
-        height: "100%",
-        width: "100%",
-        videoId: video.url,
-        playerVars: {
-            modestbranding: 0, // Hide the Youtube Logo
-            fs: 1, // Hide the full screen button
-            controls: 1, // Show pause/play buttons in player
-            showinfo: 1, // Hide the video title
-            rel: 0, // Hide related videos
-            cc_load_policy: 0, // Hide closed captions
-            iv_load_policy: 3, // Hide the Video Annotations
-            autohide: 0, // Hide video controls when playing
-            autoplay: 1, // Auto-play the video on load
-            end: video.endTime,
-        },
-        events: {
-            onReady: function(e) {
-                e.target.setVolume(video.volume);
-                e.target.seekTo(video.startTime);
-                e.target.playVideo();
+    var url = video.url;
+    if(url.slice(0,8) === "https://" || url.slice(0,7) === "http://"){
+
+        // DIV Site.
+        var element_frame = document.createElement('object');
+        element_frame.setAttribute('type', 'text/html');
+        element_frame.setAttribute('data', url);
+        element_frame.setAttribute('id', idObject);
+        element_frame.setAttribute('width', '100%');
+        element_frame.setAttribute('height', '100%');
+        document.getElementById(idContainer).appendChild(element_frame);
+
+    }else{
+
+        // DIV video.
+        var element_video = document.createElement('div');
+        element_video.setAttribute('id', idPlayer);
+        // element_video.style.height = "100%" + 20;
+        // element_video.style.width = "100%";
+        document.getElementById(idContainer).appendChild(element_video);
+
+        player = new YT.Player(idPlayer, {
+            host: 'http://www.youtube.com',
+            height: "100%",
+            width: "100%",
+            videoId: video.url,
+            playerVars: {
+                modestbranding: 0, // Hide the Youtube Logo
+                fs: 1, // Hide the full screen button
+                controls: 1, // Show pause/play buttons in player
+                showinfo: 1, // Hide the video title
+                rel: 0, // Hide related videos
+                cc_load_policy: 0, // Hide closed captions
+                iv_load_policy: 3, // Hide the Video Annotations
+                autohide: 0, // Hide video controls when playing
+                autoplay: 1, // Auto-play the video on load
+                end: video.endTime,
             },
-            onStateChange: function(e) {
-                if (e.data === YT.PlayerState.ENDED && loopAux > 0) {
-                    loopAux--;
+            events: {
+                onReady: function(e) {
+                    e.target.setVolume(video.volume);
                     e.target.seekTo(video.startTime);
                     e.target.playVideo();
-                } else {
-                    if (e.data === YT.PlayerState.ENDED && video.repeat == 0) {
+                },
+                onStateChange: function(e) {
+                    if (e.data === YT.PlayerState.ENDED && loopAux > 0) {
+                        loopAux--;
                         e.target.seekTo(video.startTime);
                         e.target.playVideo();
+                    } else {
+                        if (e.data === YT.PlayerState.ENDED && video.repeat == 0) {
+                            e.target.seekTo(video.startTime);
+                            e.target.playVideo();
+                        }
                     }
-                }
-                if (loopAux == 0) {
-                    e.target.stopVideo();
-                    var node = document.getElementById(idContainer);
-                    if (node.parentNode) {
-                      node.parentNode.removeChild(node);
+                    if (loopAux == 0) {
+                        e.target.stopVideo();
+                        var node = document.getElementById(idContainer);
+                        if (node.parentNode) {
+                            node.parentNode.removeChild(node);
+                        }
                     }
                 }
             }
-        }
-    });
+        });
+
+    }
+
 }
 
 // Faz o movimento do DIV.
